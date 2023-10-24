@@ -1,12 +1,13 @@
 "use client";
 import Card from "./card/card";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 const CompanyList = ({ type }) => {
   const [alphaTickerList, setAlphaTickerList] = useState([]);
 
   const fetchAlphaTickerList = async () => {
-    const alphaResponse = await fetch("https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=demo");
+    const alphaResponse = await fetch(`https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=demo`);
     const tempAlphaData = await alphaResponse.json();
     console.log(tempAlphaData);
     const tickerType = `top_${type}`;
@@ -21,8 +22,10 @@ const CompanyList = ({ type }) => {
 
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-      {alphaTickerList.map((companyData) => (
-        <Card key={companyData.ticker} data={companyData} />
+      {alphaTickerList.map((tickerData, index) => (
+        <Link href={`/${tickerData.ticker}`} key={index}>
+          <Card data={tickerData} type={type} />
+        </Link>
       ))}
     </section>
   );
