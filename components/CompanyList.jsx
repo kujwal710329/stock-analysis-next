@@ -1,5 +1,5 @@
 "use client";
-import Card from "./card/card";
+import Card from "./card/Card";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
